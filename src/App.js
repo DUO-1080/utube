@@ -16,18 +16,18 @@ const App = () => {
   const userdetail = useSelector((state) => state.userdetail);
 
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged(async (user) => {
+    const unsub = auth.onAuthStateChanged((user) => {
       console.log('auth state change', user);
       if (user) {
-        const profile = await firestore
+        const profile = firestore
           .collection('userprofile')
           .doc(user.uid)
           .get()
-          .then((result) => result.data());
-        // .where('uid', '==', user.uid)
-        // .get()
-        // .then((snapshot) => snapshot.docs[0].data());
-        dispatch(signIn({ profile }));
+          .then((result) => {
+            const profile = result.data();
+            console.log('userprofile: ', profile);
+            dispatch(signIn({ profile }));
+          });
       } else {
         dispatch(signIn({}));
       }

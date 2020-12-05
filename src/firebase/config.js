@@ -4,6 +4,7 @@ import 'firebase/storage';
 import 'firebase/analytics';
 import 'firebase/auth';
 
+// place your firebase config here.
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
   authDomain: 'utuclone.firebaseapp.com',
@@ -28,18 +29,18 @@ const authUiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
-  signInSuccessUrl: '/',
+  // signInSuccessUrl: '/',
   signInFlow: 'popup',
   callbacks: {
     async signInSuccessWithAuthResult(authResult, redirectURl) {
-      localStorage.setItem('user', JSON.stringify(authResult));
-      console.log('login seccess!!!', authResult);
+      // localStorage.setItem('user', JSON.stringify(authResult));
+      console.log('sign in success, auth result: ', authResult);
       if (authResult.additionalUserInfo?.isNewUser) {
+        console.log('new user, start create profile', authResult);
         await firestore
           .collection('userprofile')
           .doc(authResult.user.uid)
           .set({
-            // uid: authResult.user.uid,
             displayName: authResult.user.displayName,
             photoURL:
               authResult.user.photoURL ||
@@ -47,15 +48,10 @@ const authUiConfig = {
             banner: '',
             history: [],
             uid: authResult.user.uid,
-            // should I?
-            // liked: [],
-            // subscriptionChannels: [],
           });
       }
 
-      window.location.reload();
-      // operationType: signIn
-      // firestore.collection('userprofile').doc()
+      // window.location.reload();
       return false;
     },
   },

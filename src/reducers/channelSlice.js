@@ -11,13 +11,18 @@ export const getChannel = createAsyncThunk('channel/getChannel', async (uid) => 
     return data;
   });
 
-  const channels = (
-    await firestore.collection('userprofile').where('uid', 'in', channelIdList).get()
-  ).docs.map((doc) => {
-    const data = doc.data();
-    return data;
-  });
+  let channels = [];
 
+  if (channelIdList.length > 0) {
+    channels = (
+      await firestore.collection('userprofile').where('uid', 'in', channelIdList).get()
+    ).docs.map((doc) => {
+      const data = doc.data();
+      return data;
+    });
+  }
+
+  console.log('subscribe channels: ', channels);
   return channels;
 });
 

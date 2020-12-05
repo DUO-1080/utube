@@ -8,12 +8,13 @@ import ReactPlayer from 'react-player';
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalContainer from '../pages/ModalContainer';
 import { CloseIcon, UploadVideoIcon } from './Icons';
 import useInput from '../hooks/useInput';
 import { getFileName } from '../helper/file';
 import { firestore, timestamp } from '../firebase/config';
+import { getFeed } from '../reducers/feedSlice';
 
 const Wrapper = styled.div`
   width: 800px;
@@ -157,6 +158,7 @@ const VideoUpload = ({ open, onClose }) => {
   const [videoPath, setVideoPath] = useState();
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const videoRef = createRef();
   const title = useInput('');
   const description = useInput('');
@@ -215,6 +217,9 @@ const VideoUpload = ({ open, onClose }) => {
         .then((result) => {
           setUploading(false);
           handleCloseModal();
+
+          // when upload finish, we refetch feed data;
+          dispatch(getFeed());
         });
     });
   };
