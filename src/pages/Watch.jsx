@@ -91,7 +91,15 @@ const Wrapper = styled.div`
   }
 
   .next-play {
-    width: 400px;
+    width: 20vw;
+    max-width: 400px;
+    min-width: 300px;
+  }
+
+  @media screen and (max-width: 1300px) {
+    .next-play {
+      display: none;
+    }
   }
 `;
 
