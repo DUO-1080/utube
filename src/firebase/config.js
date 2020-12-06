@@ -46,8 +46,8 @@ const authUiConfig = {
               authResult.user.photoURL ||
               `https://avatars.dicebear.com/api/human/${authResult.user.displayName}.svg?options[w]=28&options[h]=28`,
             banner: '',
-            history: [],
             uid: authResult.user.uid,
+            createdAt: timestamp(),
           });
       }
 
