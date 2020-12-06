@@ -114,7 +114,7 @@ const Watch = () => {
 
   useEffect(() => {
     setLoading(true);
-    const video = firestore
+    firestore
       .collection('video')
       .doc(videoId)
       .get()
@@ -161,27 +161,25 @@ const Watch = () => {
     }
   }, [feedLoading]);
 
+  // record watch history
   useEffect(() => {
     if (video) {
       firestore
         .collection('userprofile')
         .doc(uid)
         .collection('history')
-        .where('videoId', '==', videoId)
+        .doc(videoId)
         .get()
-        .then((snapshot) => {
-          if (snapshot.size > 0) {
-            snapshot.docs.map((doc) => doc.ref.update({ createdAt: timestamp() }));
+        .then((doc) => {
+          if (doc.data()) {
+            doc.ref.update({ createdAt: timestamp() });
           } else {
-            firestore
-              .collection('userprofile')
-              .doc(uid)
-              .collection('history')
-              .add({ createdAt: timestamp(), video: { id: videoId, ...video }, videoId });
+            console.log('history not exist, create one.');
+            doc.ref.set({ createdAt: timestamp(), video: { id: videoId, ...video } });
           }
         });
     }
-  }, [videoId, video]);
+  }, [video]);
 
   const handleSubscript = () => {
     if (video.isSubscripted) {
