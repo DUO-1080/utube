@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import PlaylistItem from '../components/PlaylistItem';
 import TimeAgo from '../components/TimeAgo';
-import VideoGridFlex from '../components/VideoGridFlex';
-import VideoItem from '../components/VideoItem';
 import { getHistory } from '../reducers/historySlice';
 
 const Wrapper = styled.div`

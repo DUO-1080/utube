@@ -2,16 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  /* button {
-    width: 110px;
-    height: 36px;
-    text-align: center;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 450;
-  } */
   .unsub {
     background-color: red;
     color: white;

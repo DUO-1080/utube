@@ -3,9 +3,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 const Avatar = styled.img`
-  /* width: ${(props) => (props.large ? '80px' : '32px')};
-  height: ${(props) => (props.large ? '80px' : '32px')};
-  border-radius: ${(props) => (props.large ? '40px' : '16px')}; */
   object-fit: cover;
 
   ${(props) =>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { firestore } from '../firebase/config';
 import { DislikeIcon, LikeIcon } from './Icons';
 

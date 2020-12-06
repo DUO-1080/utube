@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { createRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import ReactLoading from 'react-loading';
@@ -116,8 +116,8 @@ const EditProfile = ({ open, onClose, profile }) => {
   const [avatar, setAvatar] = useState(profile.photoURL);
   const [error, setError] = useState('');
   const [updating, setUpdating] = useState(false);
-  const bannerRef = createRef();
-  const avatarRef = createRef();
+  const bannerRef = useRef();
+  const avatarRef = useRef();
   const name = useInput(profile.displayName);
   const description = useInput(profile.description);
 
@@ -158,34 +158,57 @@ const EditProfile = ({ open, onClose, profile }) => {
     }
     let bannerUrl = profile.banner;
     let avatarUrl = profile.photoURL;
-    if (banner.startsWith('data:')) {
-      const file = bannerRef.current.files[0];
-      bannerUrl = await (
-        await fireStorage.ref(`${uuid()}.${getFileExt(file.name)}`).put(file)
-      ).ref.getDownloadURL();
-    }
-
-    if (avatar.startsWith('data:')) {
-      const file = avatarRef.current.files[0];
-      avatarUrl = await (
-        await fireStorage.ref(`${uuid()}.${file.name.split('.').pop()}`).put(file)
-      ).ref.getDownloadURL();
-    }
-
-    const newProfile = {
-      banner: bannerUrl,
-      photoURL: avatarUrl,
-      displayName: newName,
-      description: description.value,
-    };
-
-    firestore
-      .collection('userprofile')
-      .doc(profile.uid)
-      .update(newProfile)
+    Promise.resolve()
       .then(() => {
-        setUpdating(false);
-        onClose(newProfile);
+        if (banner.startsWith('data:')) {
+          console.log(bannerRef);
+          return fireStorage
+            .ref(`${uuid()}.${getFileExt(bannerRef.current.files[0].name)}`)
+            .put(bannerRef.current.files[0]);
+        }
+      })
+      .then((ref) => {
+        if (ref) {
+          return ref.ref.getDownloadURL();
+        }
+      })
+      .then((url) => {
+        if (url) {
+          bannerUrl = url;
+        }
+        if (avatar.startsWith('data:')) {
+          const file = avatarRef.current.files[0];
+          return fireStorage.ref(`${uuid()}.${file.name.split('.').pop()}`).put(file);
+        }
+      })
+      .then((ref) => {
+        if (ref) {
+          return ref.ref.getDownloadURL();
+        }
+      })
+      .then((url) => {
+        if (url) {
+          avatarUrl = url;
+        }
+      })
+      .then(() => {
+        const newProfile = {
+          banner: bannerUrl,
+          photoURL: avatarUrl,
+          displayName: newName,
+          description: description.value,
+        };
+
+        console.log('profile: ', profile.uid);
+
+        firestore
+          .collection('userprofile')
+          .doc(profile.uid)
+          .update(newProfile)
+          .then(() => {
+            setUpdating(false);
+            onClose(newProfile);
+          });
       });
   };
 

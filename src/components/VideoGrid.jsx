@@ -1,18 +1,17 @@
-import React, { createRef, useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
   margin: 24px auto 0;
   max-width: 100%;
   display: grid;
-  /* gap: 8px 8px; */
   grid-template-columns: ${(props) => `repeat(${props.columns}, ${props.width}px)`};
 `;
 
 const VideoGrid = ({ children, miniWidth }) => {
   const [columns, setColumns] = useState(0);
   const [width, setWidth] = useState(0);
-  const containerRef = createRef();
+  const containerRef = useRef();
 
   const calcColumn = (current) => () => {
     const w = current?.getBoundingClientRect().width;

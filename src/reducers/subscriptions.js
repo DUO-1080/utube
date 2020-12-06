@@ -1,12 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import { firestore } from '../firebase/config';
 
 export const getSubscriptions = createAsyncThunk(
   'subscriptions/getSubscriptions',
   async (channels) => {
-    const subIds = channels.map((channel) => channel.uid);
-
     const data = await Promise.all(
       channels.map(async (channel) => {
         const videoList = (

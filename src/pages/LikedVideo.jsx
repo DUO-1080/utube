@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import PlaylistContainer from '../components/PlaylistContainer';
-import PlaylistItem from '../components/PlaylistItem';
-import VideoGridFlex from '../components/VideoGridFlex';
 import { getLikedVideo } from '../reducers/likedVideoSlice';
 
 const Wrapper = styled.div`

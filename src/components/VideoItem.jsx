@@ -40,8 +40,6 @@ const Wrapper = styled.div`
 
     .detail {
       flex-grow: 1;
-      /* padding-right: 24px; */
-      /* max-width: ${(props) => (props.mini ? '100%' : '90%')}; */
 
       .title {
         max-width: 100%;

@@ -30,25 +30,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     padding: 12px 0;
-    /*
-    .item {
-      display: flex;
-      align-items: center;
-      height: 40px;
-      width: 100%;
-      padding: 0 24px;
-      font-size: 14px;
-      justify-content: center;
-
-      .icon {
-        margin-right: 24px;
-        height: 24px;
-      }
-
-      span {
-        width: 100%;
-      }
-    } */
 
     .items-section {
       height: 0;
@@ -61,14 +42,6 @@ const Wrapper = styled.div`
   a:hover {
     background-color: ${(props) => props.theme.itemHover};
   }
-
-  /* .active {
-    font-weight: bold;
-    svg {
-      fill: ${(props) => props.theme.accent};
-    }
-    background-color: ${(props) => props.theme.itemActive};
-  } */
 
   .subscriptions {
     padding: 8px 24px;

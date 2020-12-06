@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from '../components/Avatar';
 import Comments from '../components/Comments';
 import Liked from '../components/Liked';
 import PlaylistContainer from '../components/PlaylistContainer';
-import PlaylistItem from '../components/PlaylistItem';
 import SubscribeButton from '../components/SubscribeButton';
 import VideoPlayer from '../components/VideoPlayer';
 import ViewsAndAgo from '../components/ViewsAndAgo';
@@ -20,7 +19,6 @@ const Wrapper = styled.div`
 
   .video-container {
     flex-grow: 1;
-    margin-right: 24px;
   }
 
   .video-info {
@@ -63,27 +61,6 @@ const Wrapper = styled.div`
         }
       }
     }
-    /* .subscription-button {
-      button {
-        width: 110px;
-        height: 36px;
-        text-align: center;
-        border: none;
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 450;
-      }
-      .unsub {
-        background-color: red;
-        color: white;
-      }
-
-      .sub {
-        background-color: #ececec;
-        color: #606060;
-      }
-    } */
   }
 
   .video-description {
@@ -92,6 +69,7 @@ const Wrapper = styled.div`
 
   .next-play {
     width: 400px;
+    margin-left: 24px;
   }
 
   @media screen and (max-width: 1400px) {
@@ -223,15 +201,6 @@ const Watch = () => {
               </div>
             </div>
             {video.uid === uid || (
-              // <div className="subscription-button">
-              //   <button
-              //     type="button"
-              //     className={video.isSubscripted ? 'sub' : 'unsub'}
-              //     onClick={handleSubscript}
-              //   >
-              //     {video.isSubscripted ? 'SUBSCRIPTED' : 'SUBSCRIBE'}
-              //   </button>
-              // </div>
               <SubscribeButton subscribed={video.isSubscripted} handleSubscribe={handleSubscript} />
             )}
           </div>

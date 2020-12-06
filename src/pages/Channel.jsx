@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter, NavLink, Redirect, Route, useHistory, useParams } from 'react-router-dom';
+import { NavLink, Route, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from '../components/Avatar';
 import EditProfile from '../components/EditProfile';
-import { NavLikeIcon } from '../components/Icons';
 import SubscribeButton from '../components/SubscribeButton';
 import { firestore } from '../firebase/config';
 import ChannelAbout from './ChannelAbout';

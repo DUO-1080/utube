@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { HistoryIcon, LikeIcon, NavLikeIcon } from '../components/Icons';
+import { HistoryIcon, NavLikeIcon } from '../components/Icons';
 import VideoGridFlex from '../components/VideoGridFlex';
 import VideoItem from '../components/VideoItem';
 import { getHistory } from '../reducers/historySlice';

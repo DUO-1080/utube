@@ -33,7 +33,6 @@ const authUiConfig = {
   signInFlow: 'popup',
   callbacks: {
     async signInSuccessWithAuthResult(authResult, redirectURl) {
-      // localStorage.setItem('user', JSON.stringify(authResult));
       console.log('sign in success, auth result: ', authResult);
       if (authResult.additionalUserInfo?.isNewUser) {
         console.log('new user, start create profile', authResult);
@@ -48,10 +47,10 @@ const authUiConfig = {
             banner: '',
             uid: authResult.user.uid,
             createdAt: timestamp(),
+            description: '',
           });
       }
 
-      // window.location.reload();
       return false;
     },
   },

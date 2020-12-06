@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { createRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import ReactPlayer from 'react-player';
-import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
 import { useDispatch, useSelector } from 'react-redux';
@@ -144,7 +143,8 @@ const Wrapper = styled.div`
     }
     .preview {
       position: relative;
-      padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */ .react-player {
+      padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+      .react-player {
         position: absolute;
         top: 0;
         left: 0;
@@ -159,7 +159,7 @@ const VideoUpload = ({ open, onClose }) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const videoRef = createRef();
+  const videoRef = useRef();
   const title = useInput('');
   const description = useInput('');
   const { uid } = useSelector((state) => state.userdetail.profile);

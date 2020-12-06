@@ -1,6 +1,4 @@
-import { firestore } from '../firebase/config';
-
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+const { createSlice } = require('@reduxjs/toolkit');
 
 const userdetailSlice = createSlice({
   name: 'userdetail',

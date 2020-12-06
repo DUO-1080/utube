@@ -1,5 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { createRef } from 'react';
 import styled from 'styled-components';
 import { setWidth } from '../reducers/gridSlice';
 import store from '../store';

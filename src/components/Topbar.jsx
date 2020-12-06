@@ -92,12 +92,7 @@ const Topbar = () => {
           <NotificationIcon />
         </div>
         <div className="menu-icon" onClick={handleOpenMenu}>
-          <Avatar
-            src={
-              user.profile.photoURL ||
-              `https://avatars.dicebear.com/api/human/${user.profile.displayName}.svg?options[w]=28&options[h]=28`
-            }
-          />
+          <Avatar src={user.profile.photoURL} />
         </div>
       </div>
       {open && <MultiPageMenu profile={user.profile} />}

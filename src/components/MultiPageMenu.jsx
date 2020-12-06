@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { auth } from '../firebase/config';
@@ -11,7 +10,6 @@ import NavItem from './NavItem';
 
 const Wrapper = styled.div`
   width: 280px;
-  /* height: 300px; */
   position: absolute;
   top: 50px;
   right: 10px;
@@ -28,9 +26,6 @@ const Wrapper = styled.div`
     cursor: pointer;
 
     .display-name {
-      /* font-size: 15px;
-      font-weight: 500;
-      line-height: 16px; */
       margin-top: 12px;
     }
   }

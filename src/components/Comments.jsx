@@ -133,14 +133,7 @@ const Comments = ({ videoId }) => {
         {loading ? (
           <p>loading</p>
         ) : (
-          comments.map((comment) => (
-            // <div className="comment" key={comment.id}>
-            //   <div className="avatar">
-            //     <Avatar medium src={} />
-            //   </div>
-            // </div>
-            <CommentItem key={comment.id} comment={comment} />
-          ))
+          comments.map((comment) => <CommentItem key={comment.id} comment={comment} />)
         )}
       </div>
     </Wrapper>

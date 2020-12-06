@@ -34,15 +34,7 @@ const SubscribedChannels = () => {
             to={`/channel/${channel.uid}`}
             activeClassName="nav-active"
           >
-            <NavItem
-              Icon={Avatar}
-              mini
-              src={
-                channel.photoURL ||
-                `https://avatars.dicebear.com/api/human/${channel.displayName}.svg`
-              }
-              text={channel.displayName}
-            />
+            <NavItem Icon={Avatar} mini src={channel.photoURL} text={channel.displayName} />
           </NavLink>
         ))}
     </Wrapper>
