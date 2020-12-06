@@ -101,7 +101,7 @@ const Comments = ({ videoId }) => {
       })
       .then((result) =>
         result.get().then((result) => {
-          setComments([{ ...result.data(), info: user.profile }, ...comments]);
+          setComments([{ id: result.id, ...result.data(), info: user.profile }, ...comments]);
         })
       );
     comment.setValue('');

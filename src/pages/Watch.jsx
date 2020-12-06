@@ -91,12 +91,10 @@ const Wrapper = styled.div`
   }
 
   .next-play {
-    width: 20vw;
-    max-width: 400px;
-    min-width: 300px;
+    width: 400px;
   }
 
-  @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1400px) {
     .next-play {
       display: none;
     }
