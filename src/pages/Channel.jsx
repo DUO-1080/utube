@@ -10,6 +10,7 @@ import ChannelAbout from './ChannelAbout';
 import ChannelChannels from './ChannelChannels';
 import ChannelHome from './ChannelHome';
 import { updateProfile } from '../reducers/userdetailSlice';
+import { getChannel } from '../reducers/channelSlice';
 
 const Wrapper = styled.div`
   display: flex;
@@ -170,6 +171,7 @@ const Channel = () => {
         subscribers: channelData.subscribers + 1,
       });
     }
+    dispatch(getChannel());
   };
 
   const closeModal = (profile) => {

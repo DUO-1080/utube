@@ -1,9 +1,8 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { auth, firestore } from './firebase/config';
-import Home from './pages/Home';
 import Splash from './pages/Splash';
 import Auth from './pages/Auth';
 import { signIn } from './reducers/userdetailSlice';
@@ -19,7 +18,7 @@ const App = () => {
     const unsub = auth.onAuthStateChanged((user) => {
       console.log('auth state change', user);
       if (user) {
-        const profile = firestore
+        firestore
           .collection('userprofile')
           .doc(user.uid)
           .get()
