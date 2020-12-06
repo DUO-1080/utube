@@ -3,8 +3,8 @@ const { createGlobalStyle } = require('styled-components');
 const GlobalStyle = createGlobalStyle`
   html {
 		font-size: 16px;
-		box-sizing: border-box;
-	}
+    box-sizing: border-box;
+  }
 
 	*, *:before, *:after {
 		padding: 0;

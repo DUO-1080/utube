@@ -14,6 +14,7 @@ const Subscriptions = () => {
     if (!loadingChannel) {
       dispatch(getSubscriptions(channels));
     }
+    document.title = 'Subscription';
   }, [dispatch, loadingChannel]);
 
   if (loadingVideos || loadingChannel) {

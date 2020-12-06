@@ -53,6 +53,7 @@ const Library = () => {
   useEffect(() => {
     dispatch(getHistory(uid));
     dispatch(getLikedVideo(uid));
+    document.title = 'Library';
   }, []);
 
   if (loadingHistory || loadingLiked) {

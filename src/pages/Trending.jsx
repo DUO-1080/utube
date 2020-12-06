@@ -11,6 +11,7 @@ const Trending = () => {
 
   useEffect(() => {
     dispatch(getTrending());
+    document.title = 'Trending';
   }, [dispatch]);
 
   if (loading) {

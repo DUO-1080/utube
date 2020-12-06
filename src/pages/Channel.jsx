@@ -147,6 +147,8 @@ const Channel = () => {
 
     setChannelData({ profile, videos, channels, subscribers, subscribed });
     setLoading(false);
+
+    document.title = profile.displayName;
   }, [channelId]);
 
   const handleSubscribe = () => {

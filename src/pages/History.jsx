@@ -22,6 +22,7 @@ const History = () => {
 
   useEffect(() => {
     dispatch(getHistory(uid));
+    document.title = 'History';
   }, []);
   if (loading) {
     return <p>loading</p>;

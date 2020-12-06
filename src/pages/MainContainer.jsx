@@ -7,8 +7,8 @@ const Wrapper = styled.main`
   margin-top: 56px;
   margin-left: 240px;
   overflow: auto;
-  width: calc(100% - 240px);
-  height: calc(100% - 56px);
+  width: calc(100vw - 240px);
+  height: calc(100vh - 56px);
 `;
 
 const MainContainer = ({ children }) => <Wrapper>{children}</Wrapper>;

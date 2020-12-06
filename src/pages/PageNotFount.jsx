@@ -15,11 +15,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const PageNotFount = () => (
-  <Wrapper>
-    <img src={PageNotFountImg} alt="page not fount" />
-    <p>This page isn't available. Sorry about that.</p>
-  </Wrapper>
-);
+const PageNotFount = () => {
+  document.title = 'Page Not Fount';
+  return (
+    <Wrapper>
+      <img src={PageNotFountImg} alt="page not fount" />
+      <p>This page isn't available. Sorry about that.</p>
+    </Wrapper>
+  );
+};
 
 export default PageNotFount;

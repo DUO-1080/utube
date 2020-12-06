@@ -18,6 +18,7 @@ const LikedVideo = () => {
 
   useEffect(() => {
     dispatch(getLikedVideo(uid));
+    document.title = 'Liked';
   }, []);
 
   if (loading) {

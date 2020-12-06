@@ -11,6 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getFeed());
+    document.title = 'Home';
   }, []);
 
   if (loading) {

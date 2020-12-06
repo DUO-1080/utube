@@ -128,6 +128,8 @@ const Watch = () => {
 
         setVideo(v);
         setLoading(false);
+
+        document.title = v.title;
       });
   }, [videoId]);
 
