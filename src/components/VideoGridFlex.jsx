@@ -28,7 +28,9 @@ class VideoGridFlex extends React.Component {
 
   calcWidth = () => {
     const { miniWidth } = this.props;
-    const w = this.ref.current.getBoundingClientRect().width - 48;
+    // container padding both side: 24px;
+    // minus scrollbar width;
+    const w = this.ref.current.getBoundingClientRect().width - 48 - 15;
     const column = Math.floor(w / miniWidth) || 1;
     store.dispatch(setWidth(w / column));
   };
