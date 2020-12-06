@@ -3,7 +3,7 @@ const { firestore } = require('../firebase/config');
 
 export const getTrending = createAsyncThunk('trending/getTrending', async () => {
   const data = await Promise.all(
-    (await firestore.collection('video').orderBy('views', 'asc').get()).docs.map(async (doc) => {
+    (await firestore.collection('video').orderBy('views', 'desc').get()).docs.map(async (doc) => {
       const data = doc.data();
       const info = (await firestore.collection('userprofile').doc(data.uid).get()).data();
       return { id: doc.id, info, ...data };
