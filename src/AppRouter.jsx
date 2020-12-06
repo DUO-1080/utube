@@ -16,12 +16,14 @@ import Library from './pages/Library';
 import Channel from './pages/Channel';
 import PageNotFount from './pages/PageNotFount';
 import { closeMenu } from './reducers/menuSlice';
+import ScrollToTop from './components/ScrollToTop';
 
 const AppRouter = () => {
   const dispatch = useDispatch();
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="app-container" onClick={() => dispatch(closeMenu())}>
         <Topbar />
         <Sidebar />

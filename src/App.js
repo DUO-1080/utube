@@ -7,7 +7,7 @@ import Splash from './pages/Splash';
 import Auth from './pages/Auth';
 import { signIn } from './reducers/userdetailSlice';
 import AppRouter from './AppRouter';
-import GlobalStyle from './styled/GlobarStyle';
+import GlobalStyle from './styled/GlobalStyle';
 import { light } from './styled/themes';
 
 const App = () => {
