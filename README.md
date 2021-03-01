@@ -2,7 +2,7 @@
 
 This project built with React + Redux + firebase.
 
-**Check out the [deployed site](https://keen-albattani-117136.netlify.app/)**
+**Check out the [deployed site](https://nifty-utube.netlify.app/)**
 
 ## Features
 
