@@ -29,7 +29,7 @@ const authUiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
-  // signInSuccessUrl: '/',
+  signInSuccessUrl: '/',
   signInFlow: 'popup',
   callbacks: {
     async signInSuccessWithAuthResult(authResult, redirectURl) {
