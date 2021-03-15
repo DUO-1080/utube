@@ -7,14 +7,6 @@ import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import MainContainer from './pages/MainContainer';
 import Home from './pages/Home';
-import Watch from './pages/Watch';
-import Trending from './pages/Trending';
-import Subscriptions from './pages/Subscriptions';
-import History from './pages/History';
-import LikedVideo from './pages/LikedVideo';
-import Library from './pages/Library';
-import Channel from './pages/Channel';
-import PageNotFount from './pages/PageNotFount';
 import { closeMenu } from './reducers/menuSlice';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -28,18 +20,32 @@ const AppRouter = () => {
         <Topbar />
         <Sidebar />
         <MainContainer>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/feed/trending" component={Trending} />
-            <Route path="/feed/subscriptions" component={Subscriptions} />
-            <Route path="/feed/history" component={History} />
-            <Route path="/feed/liked" component={LikedVideo} />
-            <Route path="/feed/library" component={Library} />
-            <Route path="/channel/:channelId" component={Channel} />
-            <Route path="/watch/:videoId" component={Watch} />
-            <Route path="404" component={PageNotFount} />
-            <Route component={PageNotFount} />
-          </Switch>
+          <React.Suspense fallback={<div>Loading</div>}>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route
+                path="/feed/trending"
+                component={React.lazy(() => import('./pages/Trending'))}
+              />
+              <Route
+                path="/feed/subscriptions"
+                component={React.lazy(() => import('./pages/Subscriptions'))}
+              />
+              <Route path="/feed/history" component={React.lazy(() => import('./pages/History'))} />
+              <Route
+                path="/feed/liked"
+                component={React.lazy(() => import('./pages/LikedVideo'))}
+              />
+              <Route path="/feed/library" component={React.lazy(() => import('./pages/Library'))} />
+              <Route
+                path="/channel/:channelId"
+                component={React.lazy(() => import('./pages/Channel'))}
+              />
+              <Route path="/watch/:videoId" component={React.lazy(() => import('./pages/Watch'))} />
+              <Route path="404" component={React.lazy(() => import('./pages/PageNotFount'))} />
+              <Route component={React.lazy(() => import('./pages/PageNotFount'))} />
+            </Switch>
+          </React.Suspense>
         </MainContainer>
       </div>
     </BrowserRouter>
