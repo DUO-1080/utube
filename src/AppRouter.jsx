@@ -42,6 +42,7 @@ const AppRouter = () => {
                 component={React.lazy(() => import('./pages/Channel'))}
               />
               <Route path="/watch/:videoId" component={React.lazy(() => import('./pages/Watch'))} />
+              <Route path="/sign-in" component={React.lazy(() => import('./pages/SignIn'))} />
               <Route path="404" component={React.lazy(() => import('./pages/PageNotFount'))} />
               <Route component={React.lazy(() => import('./pages/PageNotFount'))} />
             </Switch>

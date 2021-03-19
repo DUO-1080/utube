@@ -24,9 +24,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const NavItem = ({ Icon, text, className, ...restProps }) => (
+const NavItem = ({ Icon, text, classes, ...restProps }) => (
   <Wrapper>
-    <Icon className={className} {...restProps} />
+    <Icon classes={classes} {...restProps} />
     <span>{text}</span>
   </Wrapper>
 );

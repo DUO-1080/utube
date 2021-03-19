@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 import { firestore, timestamp } from '../firebase/config';
 import useInput from '../hooks/useInput';
 import Avatar from './Avatar';
 import CommentItem from './CommentItem';
+import useUser from '../hooks/useUser';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,7 +63,8 @@ const Comments = ({ videoId }) => {
   const comment = useInput('');
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
-  const user = useSelector((state) => state.userdetail);
+  const { userprofile } = useUser();
+  const uid = userprofile?.uid;
 
   useEffect(async () => {
     const data = await Promise.all(
@@ -95,13 +96,13 @@ const Comments = ({ videoId }) => {
       .doc(videoId)
       .collection('comment')
       .add({
-        uid: user.profile.uid,
+        uid,
         createdAt: timestamp(),
         comment: comment.value,
       })
       .then((result) =>
         result.get().then((result) => {
-          setComments([{ id: result.id, ...result.data(), info: user.profile }, ...comments]);
+          setComments([{ id: result.id, ...result.data(), info: userprofile }, ...comments]);
         })
       );
     comment.setValue('');
@@ -110,25 +111,29 @@ const Comments = ({ videoId }) => {
   return (
     <Wrapper>
       <div className="comment-stat"> {comments.length} Comments </div>
-      <div className="comment-box">
-        <div className="avatar">
-          <Avatar src={user.profile.photoURL} medium alt="avatar" />
-        </div>
-        <div className="main">
-          <TextareaAutosize
-            placeholder="Add a public comment"
-            value={comment.value}
-            onChange={comment.onChange}
-          />
-          <button
-            className={!comment.value.trim() ? 'button disable-button' : 'button active-button'}
-            type="button"
-            onClick={submitComment}
-          >
-            COMMENT
-          </button>
-        </div>
-      </div>
+      {userprofile && (
+        <>
+          <div className="comment-box">
+            <div className="avatar">
+              <Avatar src={userprofile.photoURL} medium alt="avatar" />
+            </div>
+            <div className="main">
+              <TextareaAutosize
+                placeholder="Add a public comment"
+                value={comment.value}
+                onChange={comment.onChange}
+              />
+              <button
+                className={!comment.value.trim() ? 'button disable-button' : 'button active-button'}
+                type="button"
+                onClick={submitComment}
+              >
+                COMMENT
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       <div className="comment-list">
         {loading ? (
           <p>loading</p>

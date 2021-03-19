@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import useUser from '../hooks/useUser';
 import {
   HistoryIcon,
   HomeIcon,
   LibraryIcon,
-  LikeIcon,
   NavLikeIcon,
   SubscriptionIcon,
   TrendingIcon,
   VideoIcon,
 } from './Icons';
 import NavItem from './NavItem';
+import SignInButton from './SignInButton';
 import SubscribedChannels from './SubscribedChannels';
 
 const Wrapper = styled.div`
@@ -49,45 +49,70 @@ const Wrapper = styled.div`
     font-size: 14px;
     color: ${(props) => props.theme.secondaryColor};
   }
+
+  .sign-in-msg {
+    padding: 0 24px;
+
+    .msg {
+      color: #030303;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
 `;
 
 const Sidebar = () => {
-  const { uid } = useSelector((state) => state.userdetail.profile);
+  const { userprofile } = useUser();
+  const uid = userprofile?.uid;
 
   return (
     <Wrapper>
       <div className="items">
         <NavLink exact to="/" activeClassName="nav-active">
-          <NavItem text="Home" Icon={HomeIcon} className="icon" />
+          <NavItem text="Home" Icon={HomeIcon} classes="icon" />
         </NavLink>
         <NavLink exact to="/feed/trending" activeClassName="nav-active">
-          <NavItem text="Trending" Icon={TrendingIcon} className="icon" />
+          <NavItem text="Trending" Icon={TrendingIcon} classes="icon" />
         </NavLink>
         <NavLink exact to="/feed/subscriptions" activeClassName="nav-active">
-          <NavItem text="Subscriptions" Icon={SubscriptionIcon} className="icon" />
+          <NavItem text="Subscriptions" Icon={SubscriptionIcon} classes="icon" />
         </NavLink>
 
         <div className="items-section" />
-
         <NavLink exact to="/feed/library" activeClassName="nav-active">
-          <NavItem text="Library" Icon={LibraryIcon} className="icon" />
+          <NavItem text="Library" Icon={LibraryIcon} classes="icon" />
         </NavLink>
         <NavLink exact to="/feed/history" activeClassName="nav-active">
-          <NavItem text="History" Icon={HistoryIcon} className="icon" />
-        </NavLink>
-        <NavLink exact to={`/channel/${uid}`} activeClassName="nav-active">
-          <NavItem text="Your videos" Icon={VideoIcon} className="icon" />
+          <NavItem text="History" Icon={HistoryIcon} classes="icon" />
         </NavLink>
 
-        <NavLink exact to="/feed/liked" activeClassName="nav-active">
-          <NavItem text="Liked videos" Icon={NavLikeIcon} className="icon" />
-        </NavLink>
+        {userprofile ? (
+          <>
+            <NavLink exact to={`/channel/${uid}`} activeClassName="nav-active">
+              <NavItem text="Your videos" Icon={VideoIcon} classes="icon" />
+            </NavLink>
+            <NavLink exact to="/feed/liked" activeClassName="nav-active">
+              <NavItem text="Liked videos" Icon={NavLikeIcon} classes="icon" />
+            </NavLink>
 
-        <div className="items-section" />
+            <div className="items-section" />
+            <h3 className="subscriptions">SUBSCRIPTIONS</h3>
 
-        <h3 className="subscriptions">SUBSCRIPTIONS</h3>
+            <SubscribedChannels />
+          </>
+        ) : (
+          <>
+            <div className="items-section" />
 
-        <SubscribedChannels />
+            <div className="sign-in-msg">
+              <NavLink exact to="/sign-in">
+                <SignInButton />
+              </NavLink>
+              <p className="msg">Sign in to like videos, comment, and subscribe.</p>
+            </div>
+            <div className="items-section" />
+          </>
+        )}
       </div>
     </Wrapper>
   );

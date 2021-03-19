@@ -10,6 +10,7 @@ import SubscribeButton from '../components/SubscribeButton';
 import VideoPlayer from '../components/VideoPlayer';
 import ViewsAndAgo from '../components/ViewsAndAgo';
 import { firestore, timestamp } from '../firebase/config';
+import useUser from '../hooks/useUser';
 import { getFeed } from '../reducers/feedSlice';
 
 const Wrapper = styled.div`
@@ -83,7 +84,8 @@ const Watch = () => {
   const { videoId } = useParams();
   const [loading, setLoading] = useState(true);
   const [video, setVideo] = useState();
-  const { uid } = useSelector((state) => state.userdetail.profile);
+  const { userprofile } = useUser();
+  const uid = userprofile?.uid;
   const { loading: feedLoading, videos: feedVideos } = useSelector((state) => state.feed);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -110,14 +112,15 @@ const Watch = () => {
         ).size;
 
         // did i subscription
-        const isSubscripted =
-          (
-            await firestore
-              .collection('subscription')
-              .where('channel', '==', data.uid)
-              .where('uid', '==', uid)
-              .get()
-          ).size > 0;
+        const isSubscripted = userprofile
+          ? (
+              await firestore
+                .collection('subscription')
+                .where('channel', '==', data.uid)
+                .where('uid', '==', uid)
+                .get()
+            ).size > 0
+          : false;
 
         const v = {
           ...data,
@@ -141,7 +144,7 @@ const Watch = () => {
 
   // record watch history
   useEffect(() => {
-    if (video) {
+    if (video && userprofile) {
       firestore
         .collection('userprofile')
         .doc(uid)
@@ -202,9 +205,13 @@ const Watch = () => {
                 <span className="sub-count">{video.subscribers} subscribers</span>
               </div>
             </div>
-            {video.uid === uid || (
-              <SubscribeButton subscribed={video.isSubscripted} handleSubscribe={handleSubscript} />
-            )}
+            {video.uid === uid ||
+              (userprofile && (
+                <SubscribeButton
+                  subscribed={video.isSubscripted}
+                  handleSubscribe={handleSubscript}
+                />
+              ))}
           </div>
           <div className="video-description">{video.description}</div>
         </div>

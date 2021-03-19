@@ -12,6 +12,8 @@ import Avatar from './Avatar';
 import VideoUpload from './VideoUpload';
 import MultiPageMenu from './MultiPageMenu';
 import { closeMenu, openMenu } from '../reducers/menuSlice';
+import SignInButton from './SignInButton';
+import useUser from '../hooks/useUser';
 
 const Wrapper = styled.header`
   position: fixed;
@@ -52,7 +54,7 @@ const Wrapper = styled.header`
       justify-content: center;
       cursor: pointer;
     }
-    .menu-icon:last-child {
+    .menu-icon::nth-child(3) {
       position: relative;
       width: 60px;
     }
@@ -60,7 +62,9 @@ const Wrapper = styled.header`
 `;
 
 const Topbar = () => {
-  const user = useSelector((state) => state.userdetail);
+  // const user = useSelector((state) => state.userdetail);
+
+  const { userprofile } = useUser();
   const { sidebar } = useSelector((state) => state.sidebar);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
@@ -74,6 +78,10 @@ const Topbar = () => {
 
   const closeModal = () => setOpenModal(false);
 
+  if (userprofile) {
+    console.log(userprofile);
+  }
+
   return (
     <Wrapper>
       <div className="start">
@@ -85,18 +93,28 @@ const Topbar = () => {
       <Search />
 
       <div className="end">
-        <div className="menu-icon" onClick={() => setOpenModal(true)}>
-          <UploadIcon />
-        </div>
-        <div className="menu-icon">
-          <NotificationIcon />
-        </div>
-        <div className="menu-icon" onClick={handleOpenMenu}>
-          <Avatar src={user.profile.photoURL} />
-        </div>
+        {userprofile ? (
+          <>
+            <div className="menu-icon" onClick={() => setOpenModal(true)}>
+              <UploadIcon />
+            </div>
+            <div className="menu-icon">
+              <NotificationIcon />
+            </div>
+            <div className="menu-icon" onClick={handleOpenMenu}>
+              <Avatar src={userprofile.photoURL} />
+            </div>
+            {open && userprofile && <MultiPageMenu profile={userprofile} />}
+            <VideoUpload open={openModal} onClose={closeModal} />
+          </>
+        ) : (
+          <div className="">
+            <Link to="/sign-in">
+              <SignInButton fill="100%" />
+            </Link>
+          </div>
+        )}
       </div>
-      {open && <MultiPageMenu profile={user.profile} />}
-      <VideoUpload open={openModal} onClose={closeModal} />
     </Wrapper>
   );
 };

@@ -68,6 +68,7 @@ const Wrapper = styled.div`
 
 const VideoItem = ({ video, ...restProps }) => {
   const width = useSelector((state) => state.grid.width);
+  console.log(video);
   return (
     <Wrapper width={width} {...restProps}>
       <Link to={`/watch/${video.id}`}>

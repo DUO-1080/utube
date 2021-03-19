@@ -21,4 +21,4 @@ export const { signIn, updateProfile } = userdetailSlice.actions;
 
 export default userdetailSlice.reducer;
 
-export const selectUserdetail = (state) => state.userdetail;
+// export const selectUserdetail = (state) => state.userdetail;

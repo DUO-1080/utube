@@ -1,18 +1,18 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { auth, firestore } from './firebase/config';
 import Splash from './pages/Splash';
-import Auth from './pages/Auth';
 import { signIn } from './reducers/userdetailSlice';
 import AppRouter from './AppRouter';
 import GlobalStyle from './styled/GlobalStyle';
 import { light } from './styled/themes';
+import useUser from './hooks/useUser';
 
 const App = () => {
   const dispatch = useDispatch();
-  const userdetail = useSelector((state) => state.userdetail);
+  const { userdetail } = useUser();
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
@@ -37,7 +37,9 @@ const App = () => {
   return (
     <ThemeProvider theme={light}>
       <GlobalStyle />
-      {userdetail.loading ? <Splash /> : userdetail.profile ? <AppRouter /> : <Auth />}
+      {/* remove login require */}
+      {/* {userdetail.loading ? <Splash /> : userdetail.profile ? <AppRouter /> : <Auth />} */}
+      {userdetail.loading ? <Splash /> : <AppRouter />}
     </ThemeProvider>
   );
 };

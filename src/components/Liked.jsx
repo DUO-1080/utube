@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { firestore } from '../firebase/config';
+import useUser from '../hooks/useUser';
 import { DislikeIcon, LikeIcon } from './Icons';
 
 const Wrapper = styled.div`
@@ -60,10 +60,11 @@ const Liked = ({ targetId }) => {
   const [me, setMe] = useState(null);
   const [likedCount, setLikedCount] = useState(0);
   const [dislikedCount, setDislikedCount] = useState(0);
-  const { uid } = useSelector((state) => state.userdetail.profile);
+  const { userprofile } = useUser();
+  const uid = userprofile?.uid;
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (userprofile) {
       firestore
         .collection('liked')
         .where('targetId', '==', targetId)
@@ -71,12 +72,13 @@ const Liked = ({ targetId }) => {
           const likedList = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
           setLikedCount(likedList.filter((l) => l.liked).length);
           setDislikedCount(likedList.filter((l) => !l.liked).length);
-        }),
-    []
-  );
+        });
+    }
+  }, []);
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (userprofile) {
+      console.log('uid: ', userprofile);
       firestore
         .collection('liked')
         .where('uid', '==', uid)
@@ -84,11 +86,14 @@ const Liked = ({ targetId }) => {
         .onSnapshot((snapshot) => {
           const me = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
           setMe(me[0]);
-        }),
-    []
-  );
+        });
+    }
+  }, []);
 
   const handleLike = () => {
+    if (!userprofile) {
+      return;
+    }
     if (me) {
       if (me.liked) {
         firestore.collection('liked').doc(me.id).delete();
@@ -101,6 +106,9 @@ const Liked = ({ targetId }) => {
   };
 
   const handleDislike = () => {
+    if (!userprofile) {
+      return;
+    }
     if (me) {
       if (!me.liked) {
         firestore.collection('liked').doc(me.id).delete();
@@ -114,12 +122,22 @@ const Liked = ({ targetId }) => {
 
   return (
     <Wrapper like={me?.liked}>
-      <button type="button" className="liked-box liked" onClick={handleLike}>
+      <button
+        type="button"
+        className="liked-box liked"
+        disabled={!userprofile}
+        onClick={handleLike}
+      >
         <LikeIcon />
         <span className="count">{likedCount}</span>
       </button>
 
-      <button type="button" className="liked-box disliked" onClick={handleDislike}>
+      <button
+        type="button"
+        className="liked-box disliked"
+        disabled={!userprofile}
+        onClick={handleDislike}
+      >
         <DislikeIcon />
         <span className="count">{dislikedCount}</span>
       </button>
